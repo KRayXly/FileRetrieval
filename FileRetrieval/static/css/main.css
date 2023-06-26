@@ -1,0 +1,16 @@
+body {
+    background-color: beige;
+    list-style: none;
+}
+.filer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+.filer>.top {
+
+}
+.filer>.top {
+    
+}
