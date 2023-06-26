@@ -2,11 +2,11 @@
 Short term document retrieval project
 - KRayXly 林之韵2019211910020
 - Xlanalili 王若澜 2020212205128
-- 
+- Jiney 金凤 2019210308034
 
 ## 答辩要求
 
-- online: 给出访问域名地址 `url` 
+- online: 给出访问域名地址 'https://github.com/KRayXly/FileRetrieval'
 - PPT & 演示 (5分钟)
 - 答辩时分别展示：PPT、功能、性能、内存，并且给出源代码地址
 
