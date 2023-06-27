@@ -9,9 +9,9 @@
 </head>
 <body>
     <h2>File Upload</h2>
-    <form method="post" enctype="multipart/form-data" action="{% url 'file_upload' %}">
+    <form method="post" enctype="multipart/form-data" action="{% url 'file_upload' %}" name="files">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button type="submit">上传</button>
     </form>
 </body>
