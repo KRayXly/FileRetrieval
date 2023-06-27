@@ -9,18 +9,41 @@
 </head>
 <body>
     <div class="filer">
-        <div class="top">
-            <h1>Local File Retrieval Service</h1>
-        </div>
-        <div class="body">
-            <div class="b-select">
-                <p>搜索框</p>
-            </div>
-            <div class="b-box">
-                <p>搜索结果</p>
-            </div>
-        </div>
+        <h1>Local File Retrieval Service</h1>
+        <form method="post" action="{% url 'search' %}" class="f-search">
+            {% csrf_token %}
+            <input type="text" name="keyword" placeholder="输入关键字">
+            <button type="submit">搜索</button>
+            <button type="reset">重置</button>
+        </form>
+        <table class="f-result">
+            <tr>
+                <th>行号</th>
+                <th>包括关键字的内容行</th>
+            </tr>
+            {% for file_path in results %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ file_path }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% if results %}
+            <form method="post" action="{% url 'save_results' %}">
+                {% csrf_token %}
+                <ul>
+                    {% for file_path in results %}
+                        <li>
+                            <input type="checkbox" name="selected_files" value="{{ file_path }}">
+                            {{ file_path }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit">保存</button>
+            </form>
+        {% endif %}
     </div>
+
     <h2>File List</h2>
     <ul>
     {% for file in files %}

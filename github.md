@@ -1,5 +1,10 @@
+# Django运行
+        python manage.py runserver
+        出现报错：
+        pip install django-multiupload//下载对应module
+
 # github操作方法
-## 如何下载
+## （B端）如何下载
         git clone https://github.com/KRayXly/FileRetrieval.git
 
 ## 提交代码到仓库
@@ -9,7 +14,7 @@
         git remote add origin https://github.com/KRayXly/FileRetrieval.git //链接远程仓库，创建主分支
         git push -u origin main //此处上传的是main分支
   
-## 获取远程仓库更新
+## （A端）获取远程仓库更新
         git pull origin main
 
 ## 注意点
@@ -39,5 +44,4 @@
 解决方法：
 
         git config --global --unset http.proxy
-
 

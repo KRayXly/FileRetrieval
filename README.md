@@ -11,13 +11,24 @@ Short term document retrieval project
 - 答辩时分别展示：PPT、功能、性能、内存，并且给出源代码地址
 
 
-## 技术要求
-- Language: JAVA/C/GO/Shell/nodejs/python ...
-- Database: file/mysql/mongodb ...
-- Page: H5/CSS/JS/VUE/REACT ...
-- Server: FTP/APACHE/NGINX/GIT ...
+## 技术框架
+- Language: Python(Django)
+- Database: MySQL
+- Page: H5 + CSS
+- Server: GIT
 
+### 页面框架
 
+```
+- FileRetrival
+    - file_search 
+        - static 静态资源/css
+        - templates 网页文件/html
+        - views.py 添加的视图文件
+        - models.py 模型调用数据库
+        - forms.py 表单相关
+    - FileRetrival 项目容器，存放Django项目配置
+```
 
 ## 项目命题
 

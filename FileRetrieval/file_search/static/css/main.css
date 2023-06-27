@@ -1,16 +1,83 @@
 body {
-    background-color: beige;
+    background-color: #dfdfdf;
     list-style: none;
 }
+h1 {
+    margin-top: 26px;
+}
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+}
+
 .filer {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 70%;
+    margin: 0 auto;
     text-align: center;
+    margin-top: 4%;
+    border-radius: 20px;
+    border: #adadad 1px solid;
+    background-color: rgba(255, 255, 255, 0.7);
 }
-.filer>.top {
+.filer>.u-but {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-align: center;
+    margin-left: 25%;
+}
+.filer>.u-but>.u-sub {
+    border-radius: 5px;
+    background-color: white;
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 10px;
+}
+.form-control {
+    margin: 10px auto;
+    padding: 10px;
+    color: rgb(18, 113, 202);
+}
 
+.f-search {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    margin-top: 10px;
+    width: 60%;
+    justify-content:space-between;
 }
-.filer>.top {
-    
+.f-search>input {
+    padding: 10px;
+    border: 0;
+    border: 5px;
+    width: 60%;
 }
+.f-search>button {
+    padding: 10px;
+    border: 0;
+    border: 5px;
+    background-color: #202020;
+    border-radius: 5px;
+    color: white;
+    width: 15%;
+}
+.f-search>button:last-child {
+    background-color: rgb(218, 237, 255);
+    color: black;
+}
+.f-result {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.f-result>tbody>tr {
+    line-height: 30px;
+}
+
