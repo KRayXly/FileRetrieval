@@ -14,9 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.urls import path
+# from FileRetrieval import view
+
+# urlpatterns = [
+#     path("upload/", view.mainpage),
+#     path("view/",view.upload),
+# ]
+from django.contrib import admin
 from django.urls import path
-from FileRetrieval import view
+from file_search.views import file_upload_view, file_list_view
 
 urlpatterns = [
-    path("view/", view.mainpage),
+    path('upload/', file_upload_view, name='file_upload'),
+    path('files/', file_list_view, name='file_list'),
 ]

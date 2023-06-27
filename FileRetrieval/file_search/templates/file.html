@@ -21,7 +21,11 @@
             </div>
         </div>
     </div>
-    
-    
+    {% comment %} <h2>File List</h2>
+    <ul>
+    {% for file in files %}
+        <li>{{ file.folder }} / {{ file.file.name }}</li>
+    {% endfor %}
+    </ul> {% endcomment %}
 </body>
 </html>

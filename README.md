@@ -1,8 +1,8 @@
 # 暑假实训 FileRetrieval
 Short term document retrieval project
-- KRayXly 林之韵2019211910020
+- KRayXly 林之韵 2019211910020
 - Xlanalili 王若澜 2020212205128
-- Jiney 金凤 2019210308034
+- Jiney88 金凤 2019210308034
 
 ## 答辩要求
 
