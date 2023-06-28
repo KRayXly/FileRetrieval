@@ -51,8 +51,26 @@
                     <td>
                         <input type="checkbox"/>
                     </td>
-                    <td>{{ forloop.counter }}</td>
+                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
                     <td>{{ file_path }}</td>
+                </tr>
+            {% endfor %}
+            {% for file_path2 in results2 %}
+                <tr class="checkline">
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
+                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                    <td>{{ file_path2 }}</td>
+                </tr>
+            {% endfor %}
+            {% for file_path3 in results3 %}
+                <tr class="checkline">
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
+                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                    <td>{{ file_path3 }}</td>
                 </tr>
             {% endfor %}
         </table>

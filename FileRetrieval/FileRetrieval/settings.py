@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '127.0.0.1',		# 要连接的数据库ip
-        'PORT': '3308',				# 数据库连接端口，一般默认为3306
+        'PORT': '3306',				# 数据库连接端口，一般默认为3306
         'NAME': 'fileretrieval',	# 已经存在的数据库名称
         'USER': 'root',				# 用户名
         'PASSWORD': '123456',		# 用户密码
