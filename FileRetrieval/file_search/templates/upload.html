@@ -16,20 +16,15 @@
             <button type="submit" class="u-sub">上传</button>
         </form>
         <h2>File List</h2>
-        <table>
-            <tr>
-                <th>文件名</th>
-                <th>文件路径</th>
-            </tr>
-        </table>
         <div class="u-box">
-            <table >
+            <table style="margin: 0 auto;">
+                <tr>
+                    <th>文件名</th>
+                </tr>
             {% for file in files %}
                 <tr>
                     <td style="max-width: 20rem;word-wrap: break-word; padding-right: 1rem; text-align: center; border-bottom: 1px solid black;">{{ file.name }}</td>
-                    <td style="max-width: 30rem;word-wrap: break-word; text-align: center;  border-bottom: 1px solid black; padding-right: 1rem;">{{ file.path }}</td>
                 </tr>
-                <!-- <li>{{ file.name }} / {{ file.path }}</li> -->
             {% endfor %}
             </table> 
         </div>

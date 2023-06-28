@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class Fileinfo(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
