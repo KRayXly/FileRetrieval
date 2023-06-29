@@ -51,7 +51,7 @@ function saveResults() {
             return;  // 跳过没有选中行的table
         }
 
-        var file_name = table.querySelector('.f-s-fn p').innerText;  // 获取文件名
+        var file_name = table.querySelector('.f-s-fn').innerText;  // 获取文件名
         selectedRows.push('FileName: ' + file_name);  // 将文件名添加到选中行数组中
         var tableHeaders = Array.from(table.querySelectorAll('th:not(:first-child)')).map(function (th) {
             return th.innerText;

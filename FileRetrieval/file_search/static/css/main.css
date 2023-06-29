@@ -131,17 +131,12 @@ button {
     margin-bottom: 30px;
 }
 .f-s-fn {
-    display: flex;
-    flex-direction: row;
     text-align: left;
     margin-left: 5%;
     font-weight: bold;
-}
-.f-s-fn>p {
-    font-weight: normal;
     color: #81A69F;
-    margin: 0;
 }
+
 .f-result>tbody>tr {
     line-height: 30px;
 }

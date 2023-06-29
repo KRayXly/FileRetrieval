@@ -42,7 +42,7 @@
         <table class="f-result">
             <tr>
                 <td colspan="3" class="f-s-fn">
-                    FileName:   <p>{{ file_path }}</p>
+                    {{ file_path }}
                 </td>
             </tr>
             <tr class="f-s-title">
@@ -51,7 +51,7 @@
                 </th>
                 <th>行号</th>
                 <th>包括关键字的内容行</th>
-            </tr class="f-s-body">
+            </tr>
                 {% for i in results %}
                     {% if i.path == file_path %}
                         <tr class="checkline">
