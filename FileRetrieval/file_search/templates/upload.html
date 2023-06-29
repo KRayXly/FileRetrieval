@@ -39,40 +39,31 @@
             <button type="reset">重置</button>
         </form>
         <table class="f-result">
+            {% for file_path in results2 %}
             <tr>
                 <th>
                     <input type="checkbox" id="checkAll"/>
                 </th>
-                <th>行号</th>
-                <th>包括关键字的内容行</th>
+                <th>{{ file_path }}</th>
+                {% comment %} <th>行号</th>
+                <th>包括关键字的内容行</th> {% endcomment %}
             </tr>
-            {% for file_path in results %}
-                <tr class="checkline">
-                    <td>
-                        <input type="checkbox"/>
-                    </td>
-                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
-                    <td>{{ file_path }}</td>
-                </tr>
+                {% for i in results %}
+                    {%ifequal i.path file_path%}
+                        <tr class="checkline">
+                            <td>
+                                <input type="checkbox"/>
+                            </td>
+                            {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                            {% comment %} <td>{{ file_path.path }}</td> {% endcomment %}
+                            <td>{{ i.num}}</td>
+                            <td>{{ i.name}}</td>
+                        </tr>
+                    {%endifequal%}
+                {%endfor%}
             {% endfor %}
-            {% for file_path2 in results2 %}
-                <tr class="checkline">
-                    <td>
-                        <input type="checkbox"/>
-                    </td>
-                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
-                    <td>{{ file_path2 }}</td>
-                </tr>
-            {% endfor %}
-            {% for file_path3 in results3 %}
-                <tr class="checkline">
-                    <td>
-                        <input type="checkbox"/>
-                    </td>
-                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
-                    <td>{{ file_path3 }}</td>
-                </tr>
-            {% endfor %}
+
+            
         </table>
         <li class="last" id="selectedRowText"></li>
         <!-- {% if results %}

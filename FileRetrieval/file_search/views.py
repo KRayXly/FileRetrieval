@@ -51,15 +51,16 @@ def file_upload_view(request):
 def search_view(request):
     results = []
     results2 = []
-    results3 = []
+    # results3 = []
     if request.method == 'POST':
         keyword = request.POST.get('keyword')
         form = FolderUploadForm()
         files = Fileinfo.objects.all()
-        context = {'files': files,'form': form,'results':results,'results2':results2,'results3':results3}
+        context = {'files': files,'form': form,'results':results,'results2':results2}
         # 在这里执行根据关键字搜索的逻辑
         for file in files:
             filepath=file.path
+            filename=file.name
             ext = os.path.splitext(filepath)[1]
             #对txt文件按行进行关键字匹配
             if ext=='.txt':
@@ -70,12 +71,13 @@ def search_view(request):
                         tnum=tnum+1
                         if keyword in line:
                             if flag==0:
-                                results.append("文件路径"+filepath)
-                                results.append("--------------------------------")
-                                results.append("行号"+str(tnum)+"--->"+line)
+                                results2.append(filename)
+                                txt=Result(filename,str(tnum),line)
+                                results.append(txt)
                                 flag=1
                             else:
-                                results.append("行号"+str(tnum)+"--->"+line)
+                                txt=Result(filename,str(pnum),line)
+                                results.append(txt)
             #对pdf文件按行进行关键字匹配                
             elif ext=='.pdf':
                 flag=0
@@ -91,12 +93,13 @@ def search_view(request):
                             pnum=pnum+1
                             if keyword in line:
                                 if flag==0:
-                                    results2.append("文件路径"+filepath)
-                                    results2.append("--------------------------------")
-                                    results2.append("行号"+str(pnum)+"---->"+line)
+                                    results2.append(filename)
+                                    txt=Result(filename,str(pnum),line)
+                                    results.append(txt)
                                     flag=1
                                 else:
-                                    results2.append("行号"+str(pnum)+"---->"+line)
+                                    txt=Result(filename,str(pnum),line)
+                                    results.append(txt)
             #对word文件按段落进行关键字匹配                     
             elif ext=='.docx':
                 flag=0
@@ -106,12 +109,13 @@ def search_view(request):
                     dnum=dnum+1
                     if keyword in paragraph.text:
                         if flag==0:
-                            results3.append("文件路径"+filepath)
-                            results3.append("--------------------------------")
-                            results3.append("行号"+str(dnum)+"----->"+paragraph.text)
+                            results2.append(filename)
+                            txt=Result(filename,str(dnum),line)
+                            results.append(txt)
                             flag=1
                         else:
-                            results3.append("行号"+str(dnum)+"----->"+paragraph.text)
+                            txt=Result(filename,str(pnum),line)
+                            results.append(txt)
     return render(request, 'upload.html', context)
 
 def save_results(request):
@@ -124,3 +128,10 @@ def save_results(request):
         response['Content-Disposition'] = 'attachment; filename="search_results.txt"'
         response.write(file_content)
         return response
+    
+#定义Result类保存搜索出的包含关键字的行
+class Result:
+    def __init__(self,path, num,name):
+        self.path=path
+        self.name = name
+        self.num = num
