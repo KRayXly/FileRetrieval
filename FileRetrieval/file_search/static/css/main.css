@@ -70,7 +70,7 @@ button {
     line-height: 30px;
 }
 .u-b-fname{
-    max-width: 20rem;
+    max-width: 90%;
     word-wrap: break-word; 
     padding-right: 1rem; 
     text-align: center; 
@@ -141,7 +141,7 @@ button {
     line-height: 30px;
 }
 .f-s-title>th {
-    border-bottom: 1px black dashed;
+    border-bottom: 1px black solid;
 }
 .f-s-t-ch,.f-s-b-ch {
     width: 15%;
@@ -163,6 +163,9 @@ button {
     line-height: 44px;
     margin-top: 50px;
     text-align: center;
+}
+.checkline>td {
+    border-bottom: 1px #81A69F dashed;
 }
 .lastaddress>li>a {
     text-decoration:none;

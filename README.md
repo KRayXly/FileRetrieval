@@ -12,23 +12,10 @@ Short term document retrieval project
 
 
 ## 技术框架
-- Language: Python(Django)
+- Language: Python(Django框架)
 - Database: MySQL
-- Page: H5 + CSS
-- Server: GIT
-
-### 页面框架
-
-```
-- FileRetrival
-    - file_search 
-        - static 静态资源/css
-        - templates 网页文件/html
-        - views.py 添加的视图文件
-        - models.py 模型调用数据库
-        - forms.py 表单相关
-    - FileRetrival 项目容器，存放Django项目配置
-```
+- Page: H5 + CSS3 + JAVASCRIPT
+- Server: 本地文件服务器
 
 ## 项目命题
 
