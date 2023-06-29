@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
-
+import json
 from http.client import HTTPResponse
+from django.http import HttpResponse
 import shutil
 from django.shortcuts import render, redirect
 from .models import Fileinfo
@@ -8,6 +9,7 @@ import os
 from .forms import FolderUploadForm
 import docx
 import PyPDF2
+from django.views.decorators.csrf import csrf_exempt
 
 #设置过滤后的文件类型 当然可以设置多个类型
 filter=[".txt",".doc",".pdf",".docx"]
@@ -56,7 +58,7 @@ def search_view(request):
         keyword = request.POST.get('keyword')
         form = FolderUploadForm()
         files = Fileinfo.objects.all()
-        context = {'files': files,'form': form,'results':results,'results2':results2}
+        context = {'files': files,'form': form,'results':results,'results2':results2,'keyword': keyword}
         # 在这里执行根据关键字搜索的逻辑
         for file in files:
             filepath=file.path
@@ -76,7 +78,7 @@ def search_view(request):
                                 results.append(txt)
                                 flag=1
                             else:
-                                txt=Result(filename,str(pnum),line)
+                                txt=Result(filename,str(tnum),line)
                                 results.append(txt)
             #对pdf文件按行进行关键字匹配                
             elif ext=='.pdf':
@@ -114,19 +116,21 @@ def search_view(request):
                             results.append(txt)
                             flag=1
                         else:
-                            txt=Result(filename,str(pnum),line)
+                            txt=Result(filename,str(dnum),line)
                             results.append(txt)
     return render(request, 'upload.html', context)
 
 def save_results(request):
     if request.method == 'POST':
-        selected_files = request.POST.getlist('selected_files')
-        # 在这里执行保存选中结果的逻辑
-        # 这里仅作示例，将选中的文件路径保存到文本并返回下载
-        file_content = '\n'.join(selected_files)
-        response = HTTPResponse(content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename="search_results.txt"'
-        response.write(file_content)
+        selected_rows = json.loads(request.body.decode('utf-8'))['selected_rows']
+        
+        result_text = []
+        for row in selected_rows:
+            result_text.append(row)  # 添加选中行的内容
+
+        result_text = '\n'.join(result_text)
+        response = HttpResponse(result_text, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename="selected_results.txt"'
         return response
     
 #定义Result类保存搜索出的包含关键字的行

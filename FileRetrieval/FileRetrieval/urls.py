@@ -26,7 +26,7 @@ from django.urls import path
 from file_search.views import file_upload_view, search_view , save_results
 
 urlpatterns = [
-    path('upload/', file_upload_view, name='file_upload'),
+    path('', file_upload_view, name='file_upload'),
     path('search/', search_view, name='search'),
     path('save_results/', save_results, name='save_results'),
 ]

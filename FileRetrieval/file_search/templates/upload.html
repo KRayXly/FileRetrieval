@@ -19,11 +19,11 @@
         <div class="u-box">
             <table style="margin: 0 auto;">
                 <tr>
-                    <th>文件名</th>
+                    <th style="border: 1px #81A69F dashed; line-height:40px;">文件名</th>
                 </tr>
             {% for file in files %}
                 <tr>
-                    <td style="max-width: 20rem;word-wrap: break-word; padding-right: 1rem; text-align: center; border-bottom: 1px solid black;">{{ file.name }}</td>
+                    <td class="u-b-fname">{{ file.name }}</td>
                 </tr>
             {% endfor %}
             </table> 
@@ -34,52 +34,46 @@
         <h1>Local File Retrieval Service</h1>
         <form method="post" action="{% url 'search' %}" class="f-search">
             {% csrf_token %}
-            <input type="text" name="keyword" placeholder="输入关键字">
+            <input type="text" name="keyword" placeholder="输入关键字" value="{{ keyword }}">
             <button type="submit">搜索</button>
-            <button type="reset">重置</button>
         </form>
+
+        {% for file_path in results2 %}
         <table class="f-result">
-            {% for file_path in results2 %}
             <tr>
-                <th>
-                    <input type="checkbox" id="checkAll"/>
-                </th>
-                <th>{{ file_path }}</th>
-                {% comment %} <th>行号</th>
-                <th>包括关键字的内容行</th> {% endcomment %}
+                <td colspan="3" class="f-s-fn">
+                    FileName:   <p>{{ file_path }}</p>
+                </td>
             </tr>
+            <tr class="f-s-title">
+                <th class="f-s-t-ch">
+                    <input type="checkbox" class="checkAll"/>
+                </th>
+                <th>行号</th>
+                <th>包括关键字的内容行</th>
+            </tr class="f-s-body">
                 {% for i in results %}
-                    {%ifequal i.path file_path%}
+                    {% if i.path == file_path %}
                         <tr class="checkline">
                             <td>
-                                <input type="checkbox"/>
+                                <input class="rowCheckbox" type="checkbox"/>
                             </td>
                             {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
                             {% comment %} <td>{{ file_path.path }}</td> {% endcomment %}
-                            <td>{{ i.num}}</td>
+                            <td class="f-s-b-ch">{{ i.num}}</td>
                             <td>{{ i.name}}</td>
                         </tr>
-                    {%endifequal%}
-                {%endfor%}
-            {% endfor %}
-
-            
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}  
         </table>
-        <li class="last" id="selectedRowText"></li>
-        <!-- {% if results %}
-            <form method="post" action="{% url 'save_results' %}">
-                {% csrf_token %}
-                <ul>
-                    {% for file_path in results %}
-                        <li>
-                            <input type="checkbox" name="selected_files" value="{{ file_path }}">
-                            {{ file_path }}
-                        </li>
-                    {% endfor %}
-                </ul>
-                <button type="submit">保存</button>
-            </form>
-        {% endif %} -->
+        <button onclick="saveResults()" class="f-savetxt">保存</button>
+        <!-- <li class="last" id="selectedRowText"></li> -->
+    </div>
+    <div class="lastaddress">
+        <li>
+           Local File Retrieval Service  @ Address ：<a href="https://github.com/KRayXly/FileRetrieval">github.com/KRayXly/FileRetrieval</a>
+        </li>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -1,5 +1,6 @@
 body {
     background-color: #dfdfdf;
+    margin: 0;
 }
 
 li {
@@ -53,7 +54,7 @@ button {
     margin: 10px auto;
     margin-top: 8px;
     padding-left: 9%;
-    color: rgb(18, 113, 202);
+    color: #81A69F;
 }
 
 .filer>.u-box {
@@ -68,34 +69,31 @@ button {
     margin-bottom: 30px;
     line-height: 30px;
 }
-
+.u-b-fname{
+    max-width: 20rem;
+    word-wrap: break-word; 
+    padding-right: 1rem; 
+    text-align: center; 
+    border-bottom: 1px solid black;
+    line-height: 35px;
+}
 
 /*滚动条高宽度*/
-
 .filer>.u-box::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
-
-
 /*滚动条滑块*/
-
 .filer>.u-box::-webkit-scrollbar-thumb {
     border-radius: 3px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     background: #c7c4c4;
 }
-
-
 /*滚动条里面轨道*/
-
 .filer>.u-box::-webkit-scrollbar-track {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
 }
-
-
 /*滚动条的小边角*/
-
 .filer>.u-box::-webkit-scrollbar-corner {
     background: transparent;
 }
@@ -114,30 +112,65 @@ button {
     padding: 10px;
     border: 0;
     border: 5px;
-    width: 60%;
+    width: 70%;
 }
 
 .f-search>button {
     padding: 10px;
     border: 0;
     border: 5px;
-    background-color: #202020;
+    background-color: #81A69F;
     border-radius: 5px;
     color: white;
     width: 15%;
 }
 
-.f-search>button:last-child {
-    background-color: rgb(218, 237, 255);
-    color: black;
-}
-
 .f-result {
     width: 90%;
-    margin: 20px auto;
+    margin: 10px auto;
     margin-bottom: 30px;
 }
-
+.f-s-fn {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    margin-left: 5%;
+    font-weight: bold;
+}
+.f-s-fn>p {
+    font-weight: normal;
+    color: #81A69F;
+    margin: 0;
+}
 .f-result>tbody>tr {
     line-height: 30px;
+}
+.f-s-title>th {
+    border-bottom: 1px black dashed;
+}
+.f-s-t-ch,.f-s-b-ch {
+    width: 15%;
+}
+.f-savetxt{
+    margin: 10px auto;
+    margin-bottom: 30px;
+    background-color: #81A69F;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 20%;
+}
+.lastaddress {
+    background: rgb(52, 52, 52);
+    color: white;
+    line-height: 44px;
+    margin-top: 50px;
+    text-align: center;
+}
+.lastaddress>li>a {
+    text-decoration:none;
+    color: white;
+
 }
