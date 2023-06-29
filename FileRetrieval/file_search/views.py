@@ -74,11 +74,15 @@ def search_view(request):
                         if keyword in line:
                             if flag==0:
                                 results2.append(filename)
-                                txt=Result(filename,str(tnum),line)
+                                #将关键字进行高亮显示
+                                highlighted_line=line.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                                txt=Result(filename,str(tnum),highlighted_line)
                                 results.append(txt)
                                 flag=1
                             else:
-                                txt=Result(filename,str(tnum),line)
+                                #将关键字进行高亮显示
+                                highlighted_line=line.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                                txt=Result(filename,str(tnum),highlighted_line)
                                 results.append(txt)
             #对pdf文件按行进行关键字匹配                
             elif ext=='.pdf':
@@ -96,11 +100,15 @@ def search_view(request):
                             if keyword in line:
                                 if flag==0:
                                     results2.append(filename)
-                                    txt=Result(filename,str(pnum),line)
+                                    #将关键字进行高亮显示
+                                    highlighted_line=line.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                                    txt=Result(filename,str(pnum),highlighted_line)
                                     results.append(txt)
                                     flag=1
                                 else:
-                                    txt=Result(filename,str(pnum),line)
+                                    #将关键字进行高亮显示
+                                    highlighted_line=line.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                                    txt=Result(filename,str(pnum),highlighted_line)
                                     results.append(txt)
             #对word文件按段落进行关键字匹配                     
             elif ext=='.docx':
@@ -109,14 +117,19 @@ def search_view(request):
                 dnum=0
                 for paragraph in doc.paragraphs:
                     dnum=dnum+1
-                    if keyword in paragraph.text:
+                    content=paragraph.text
+                    if keyword in content:
                         if flag==0:
                             results2.append(filename)
-                            txt=Result(filename,str(dnum),line)
+                            #将关键字进行高亮显示
+                            highlighted_text=content.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                            txt=Result(filename,str(dnum),highlighted_text)
                             results.append(txt)
                             flag=1
                         else:
-                            txt=Result(filename,str(dnum),line)
+                            #将关键字进行高亮显示
+                            highlighted_text=content.replace(keyword, f"<span style='color: red'>{keyword}</span>")
+                            txt=Result(filename,str(dnum),highlighted_text)
                             results.append(txt)
     return render(request, 'upload.html', context)
 

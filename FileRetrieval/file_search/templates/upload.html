@@ -61,7 +61,7 @@
                             {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
                             {% comment %} <td>{{ file_path.path }}</td> {% endcomment %}
                             <td class="f-s-b-ch">{{ i.num}}</td>
-                            <td>{{ i.name}}</td>
+                            <td>{{ i.name|safe}}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
