@@ -1,7 +1,9 @@
 #-*- coding: utf-8 -*-
 import json
+import psutil
 from http.client import HTTPResponse
 from django.http import HttpResponse
+from django.http import JsonResponse
 import shutil
 from django.shortcuts import render, redirect
 from .models import Fileinfo
@@ -14,40 +16,55 @@ from django.views.decorators.csrf import csrf_exempt
 #设置过滤后的文件类型 当然可以设置多个类型
 filter=[".txt",".doc",".pdf",".docx"]
 def file_upload_view(request):
-    form = FolderUploadForm()
-    files = Fileinfo.objects.all()
-    context = {'files': files,'form': form}
-    if os.path.exists('upload'):
-        shutil.rmtree('upload')
-    Fileinfo.objects.all().delete()
+    # 获取本地磁盘路径列表
+    disk_paths = get_local_disk_paths()
+    # 将磁盘路径列表传递给模板
+    context = {
+        'disk_paths': disk_paths
+    }
     if request.method == 'POST':
-        form = FolderUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            folder = request.FILES.getlist('folder')
-            # 创建文件夹的路径
-            folder_path = os.path.join('upload')
-            # 确保文件夹目录存在
-            os.makedirs(folder_path, exist_ok=True)
-            # 遍历上传的文件夹内的所有子文件夹和文件，并将文件逐个保存到服务器
-            for file in folder:
-                destination_path = os.path.join(folder_path, file.name)
-                with open(destination_path, 'wb+') as destination:
-                    for chunk in file.chunks():
-                        destination.write(chunk)
-            for root, _, files in os.walk(folder_path):
-                for file_name in files:
-                    # 构建完整的文件路径
-                    file_path = os.path.join(root, file_name)
-                    #获取文件后后缀
-                    ext = os.path.splitext(file_path)[1]
-                    if ext in filter:
-                    # 创建 File 对象并保存到数据库
-                        file = Fileinfo(name=file_name, path=file_path)
-                        file.save()
-        # return render(request, 'upload.html',context)
-    else:
-       form = FolderUploadForm()
-       Fileinfo.objects.all().delete()
+        # 处理文件上传逻辑
+        # 获取选择的磁盘路径
+        disk = request.POST.get('disk')
+        # 获取下一级目录
+        top_level_directories = get_top_level_directories(disk)
+        # 将目录列表传递给模板
+        context['top_level_directories'] = top_level_directories
+
+    # form = FolderUploadForm()
+    # files = Fileinfo.objects.all()
+    # context = {'files': files,'form': form}
+    # if os.path.exists('upload'):
+    #     shutil.rmtree('upload')
+    # Fileinfo.objects.all().delete()
+    # if request.method == 'POST':
+    #     form = FolderUploadForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         folder = request.FILES.getlist('folder')
+    #         # 创建文件夹的路径
+    #         folder_path = os.path.join('upload')
+    #         # 确保文件夹目录存在
+    #         os.makedirs(folder_path, exist_ok=True)
+    #         # 遍历上传的文件夹内的所有子文件夹和文件，并将文件逐个保存到服务器
+    #         for file in folder:
+    #             destination_path = os.path.join(folder_path, file.name)
+    #             with open(destination_path, 'wb+') as destination:
+    #                 for chunk in file.chunks():
+    #                     destination.write(chunk)
+    #         for root, _, files in os.walk(folder_path):
+    #             for file_name in files:
+    #                 # 构建完整的文件路径
+    #                 file_path = os.path.join(root, file_name)
+    #                 #获取文件后后缀
+    #                 ext = os.path.splitext(file_path)[1]
+    #                 if ext in filter:
+    #                 # 创建 File 对象并保存到数据库
+    #                     file = Fileinfo(name=file_name, path=file_path)
+    #                     file.save()
+    #     # return render(request, 'upload.html',context)
+    # else:
+    #    form = FolderUploadForm()
+    #    Fileinfo.objects.all().delete()
     return render(request, 'upload.html', context)
 
 def search_view(request):
@@ -152,3 +169,21 @@ class Result:
         self.path=path
         self.name = name
         self.num = num
+
+def get_local_disk_paths():
+    # 获取本地磁盘路径列表
+    disk_partitions = psutil.disk_partitions()
+    local_disk_paths = []
+    for partition in disk_partitions:
+        if 'cdrom' not in partition.opts and partition.fstype != '':
+            local_disk_paths.append(partition.mountpoint)
+    return local_disk_paths
+
+def get_top_level_directories(request):
+    directory = request.GET.get('directory')
+    directories = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isdir(item_path):
+            directories.append(item)
+    return JsonResponse({'directories': directories})

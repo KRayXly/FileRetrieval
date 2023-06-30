@@ -23,10 +23,11 @@ Including another URLconf
 # ]
 from django.contrib import admin
 from django.urls import path
-from file_search.views import file_upload_view, search_view , save_results
+from file_search.views import file_upload_view, search_view , save_results , get_top_level_directories
 
 urlpatterns = [
     path('', file_upload_view, name='file_upload'),
     path('search/', search_view, name='search'),
     path('save_results/', save_results, name='save_results'),
+    path('get_top_level_directories/', get_top_level_directories, name='get_top_level_directories'),
 ]

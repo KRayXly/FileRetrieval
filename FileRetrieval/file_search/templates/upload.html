@@ -10,9 +10,15 @@
 <body>
     <div class="filer">
         <h1>File Upload</h1>
+        <ul id="selected-paths"></ul>
         <form method="post" enctype="multipart/form-data" action="{% url 'file_upload' %}" name="files" class="u-but">
             {% csrf_token %}
-            {{ form.as_p }}
+            <select name="disk" id="disk-select">
+                <option value="" disabled selected>Select Disk</option>
+                {% for path in disk_paths %}
+                    <option value="{{ path }}">{{ path }}</option>
+                {% endfor %}
+            </select>
             <button type="submit" class="u-sub">上传</button>
         </form>
         <h2>File List</h2>

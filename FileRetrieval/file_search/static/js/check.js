@@ -26,6 +26,60 @@ $(function(){
     $('.checkline').click(function() {
         $(this).find('.rowCheckbox').click();
     });
+
+
+    // 获取磁盘路径选择框和已选路径列表
+    const diskSelect = document.getElementById('disk-select');
+    const selectedPaths = document.getElementById('selected-paths');
+
+    // 监听选择框的change事件
+    diskSelect.addEventListener('change', function() {
+        console.log('Selected Path:', this.value);
+        // 清空已选路径列表
+        selectedPaths.innerHTML = '';
+
+        // 获取选中的磁盘路径
+        const selectedPath = this.value;
+
+        // 创建新的列表项，并将选中的路径添加到已选路径列表中
+        const listItem = document.createElement('li');
+        listItem.textContent = selectedPath;
+        selectedPaths.appendChild(listItem);
+
+        // 发送AJAX请求获取下一级目录
+        getTopLevelDirectories(selectedPath);
+    });
+
+    // 发送AJAX请求获取下一级目录
+    function getTopLevelDirectories(directory) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `/get_top_level_directories/?directory=${encodeURIComponent(directory)}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const directories = response.directories;
+                updateSelectOptions(directories);
+            }
+        };
+        xhr.send();
+    }
+
+    // 更新选择框的选项
+    function updateSelectOptions(directories) {
+        const select = document.getElementById('disk-select');
+        const currentPath = select.value;
+
+        // 清空选择框选项
+        select.innerHTML = '<option value="" disabled selected></option>';
+
+        directories.forEach(function(directory) {
+            const option = document.createElement('option');
+            option.value = option.value = currentPath.endsWith('\\') ? `${currentPath}${directory}` : `${currentPath}\\${directory}`;
+            option.textContent = directory;
+            select.appendChild(option);
+        });
+    }
+
 });
 
 function updateSelectedRowText() {
