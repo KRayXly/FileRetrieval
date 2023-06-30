@@ -10,18 +10,26 @@
 <body>
     <div class="filer">
         <h1>File Upload</h1>
-        <ul id="selected-paths"></ul>
+        <ul id="selected-paths" style="height: 30px;"></ul>
         <form method="post" enctype="multipart/form-data" action="{% url 'file_upload' %}" name="files" class="u-but">
             {% csrf_token %}
             <select name="disk" id="disk-select">
-                <option value="" disabled selected>Select Disk</option>
+                <option value="" disabled selected></option>
                 {% for path in disk_paths %}
                     <option value="{{ path }}">{{ path }}</option>
                 {% endfor %}
             </select>
-            <button type="submit" class="u-sub">上传</button>
         </form>
-        <h2>File List</h2>
+        <input type="text" id="path" name="path" style="height: 20px; display:none;">
+        <button class="u-sub" onclick="submitValue()" 
+            style="border-radius: 5px;
+            background-color: white;
+            width: 50%;
+            margin: 20px auto;
+            margin-bottom: 30px;
+            padding: 10px;">上传</button>
+        <li id="lastpath"></li>
+        <!-- <h2>File List</h2>
         <div class="u-box">
             <table style="margin: 0 auto;">
                 <tr>
@@ -33,7 +41,7 @@
                 </tr>
             {% endfor %}
             </table> 
-        </div>
+        </div> -->
         
     </div>
     <div class="filer">
@@ -43,7 +51,7 @@
             <input type="text" name="keyword" placeholder="输入关键字" value="{{ keyword }}">
             <button type="submit">搜索</button>
         </form>
-
+        
         {% for file_path in results2 %}
         <table class="f-result">
             <tr>

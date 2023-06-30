@@ -30,42 +30,17 @@ def file_upload_view(request):
         top_level_directories = get_top_level_directories(disk)
         # 将目录列表传递给模板
         context['top_level_directories'] = top_level_directories
-
-    # form = FolderUploadForm()
-    # files = Fileinfo.objects.all()
-    # context = {'files': files,'form': form}
-    # if os.path.exists('upload'):
-    #     shutil.rmtree('upload')
-    # Fileinfo.objects.all().delete()
-    # if request.method == 'POST':
-    #     form = FolderUploadForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         folder = request.FILES.getlist('folder')
-    #         # 创建文件夹的路径
-    #         folder_path = os.path.join('upload')
-    #         # 确保文件夹目录存在
-    #         os.makedirs(folder_path, exist_ok=True)
-    #         # 遍历上传的文件夹内的所有子文件夹和文件，并将文件逐个保存到服务器
-    #         for file in folder:
-    #             destination_path = os.path.join(folder_path, file.name)
-    #             with open(destination_path, 'wb+') as destination:
-    #                 for chunk in file.chunks():
-    #                     destination.write(chunk)
-    #         for root, _, files in os.walk(folder_path):
-    #             for file_name in files:
-    #                 # 构建完整的文件路径
-    #                 file_path = os.path.join(root, file_name)
-    #                 #获取文件后后缀
-    #                 ext = os.path.splitext(file_path)[1]
-    #                 if ext in filter:
-    #                 # 创建 File 对象并保存到数据库
-    #                     file = Fileinfo(name=file_name, path=file_path)
-    #                     file.save()
-    #     # return render(request, 'upload.html',context)
-    # else:
-    #    form = FolderUploadForm()
-    #    Fileinfo.objects.all().delete()
     return render(request, 'upload.html', context)
+def file_upload2(request):
+    file_path = request.POST.get('file_path')
+    print('File Path:', file_path)
+    if file_path is not None:
+        print('File Path:', file_path)
+        return HttpResponse('File Path: ' + file_path)
+    else:
+        # 处理未提供file_path的情况
+        return HttpResponse('File Path is missing')
+
 
 def search_view(request):
     results = []
@@ -187,3 +162,21 @@ def get_top_level_directories(request):
         if os.path.isdir(item_path):
             directories.append(item)
     return JsonResponse({'directories': directories})
+
+def getpathview(request):
+    folder_path=request.GET.get('value')
+    print(folder_path)
+    Fileinfo.objects.all().delete()
+    for root, _, files in os.walk(folder_path):
+        for file_name in files:
+            # 构建完整的文件路径
+            file_path = os.path.join(root, file_name)
+            #获取文件后后缀
+            ext = os.path.splitext(file_path)[1]
+            if ext in filter:
+            # 创建 File 对象并保存到数据库
+                file = Fileinfo(name=file_name, path=file_path)
+                file.save()
+    files = Fileinfo.objects.all()
+    return render(request, 'upload.html',{'files': files,'ffpath':folder_path})
+

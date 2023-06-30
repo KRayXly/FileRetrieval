@@ -27,7 +27,6 @@ $(function(){
         $(this).find('.rowCheckbox').click();
     });
 
-
     // 获取磁盘路径选择框和已选路径列表
     const diskSelect = document.getElementById('disk-select');
     const selectedPaths = document.getElementById('selected-paths');
@@ -44,10 +43,11 @@ $(function(){
         // 创建新的列表项，并将选中的路径添加到已选路径列表中
         const listItem = document.createElement('li');
         listItem.textContent = selectedPath;
+        listItem.setAttribute('id', 'your-id-value');
         selectedPaths.appendChild(listItem);
-
         // 发送AJAX请求获取下一级目录
         getTopLevelDirectories(selectedPath);
+        document.getElementById('path').value=selectedPath;
     });
 
     // 发送AJAX请求获取下一级目录
@@ -63,6 +63,7 @@ $(function(){
         };
         xhr.send();
     }
+      
 
     // 更新选择框的选项
     function updateSelectOptions(directories) {
@@ -71,6 +72,16 @@ $(function(){
 
         // 清空选择框选项
         select.innerHTML = '<option value="" disabled selected></option>';
+        // 添加 "../" 选项作为第二行选项
+        const optionUp = document.createElement('option');
+        const lastpath = currentPath.substring(0, currentPath.lastIndexOf('\\'));
+        const lastChar = lastpath.charAt(lastpath.length - 1);
+        if(lastChar== ':')
+            optionUp.value = lastpath+"\\";
+        else
+            optionUp.value = lastpath;
+        optionUp.textContent = '../';
+        select.appendChild(optionUp);
 
         directories.forEach(function(directory) {
             const option = document.createElement('option');
@@ -159,4 +170,41 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+// function handleFormSubmission(event) {
+//     event.preventDefault(); // 阻止默认的表单提交行为
+    
+//     // 获取磁盘路径选择框和文件路径输入字段
+//     const diskSelect = document.getElementById('disk-select');
+//     const filePathInput = document.getElementById('file-path-input');
+//     const fileli = document.getElementById('your-id-value');
+//     console.log('adasda');
+//     // 更新文件路径输入字段的值
+//     const selectedPath = diskSelect.value;
+//     filePathInput.value = fileli.textContent;
+
+// }
+
+function submitValue() {
+    var inputElement = document.getElementById("path");
+    var inputValue = inputElement.value;
+    console.log(inputValue)
+    
+    var request = new XMLHttpRequest();
+    request.open("GET",  `/getpath/?value=${encodeURIComponent(inputValue)}`,true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    request.onreadystatechange = function() {
+      if (request.readyState === XMLHttpRequest.DONE) {
+        if (request.status === 200) {
+          // 请求成功后的处理逻辑
+          console.log("请求成功");
+        } else {
+          // 请求失败后的处理逻辑
+          console.log("请求失败");
+        }
+      }
+    };
+    request.send();
 }
